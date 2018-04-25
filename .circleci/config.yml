@@ -28,7 +28,7 @@ jobs:
         command: mvn dependency:go-offline
     - run:
         name: Maven Verify
-        command: mvn verify -B
+        command: mvn verify -B -DskipTests=true
     - save_cache:
         paths:
         - ~/.m2

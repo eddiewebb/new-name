@@ -28,7 +28,7 @@ steps:
   - run: mvn dependency:go-offline
   - run:
       name: Maven Verify
-      command: mvn verify -B
+      command: mvn verify -B <<parameters.arguments>>
   - save_cache:
       paths:
        - ~/.m2
