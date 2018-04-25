@@ -1,7 +1,7 @@
 version: 2
 workflows:
   version: 2
-  cf-workflow:
+  build:
     jobs:
     - verify: {}
 jobs:
@@ -26,16 +26,16 @@ jobs:
         - maven-repo-V1
     - run:
         command: mvn dependency:go-offline
+    - run:
+        name: Maven Verify
+        command: mvn verify -B
     - save_cache:
         paths:
         - ~/.m2
         key: maven-repo-V1-{{ checksum "pom.xml" }}
-    - run:
-        name: Maven Verify
-        command: mvn verify -B
     - store_test_results:
         path: target/surefire-reports
     - store_test_results:
         path: target/failsafe-reports
     - store_artifacts:
-        path: target/*.jar
+        path: target

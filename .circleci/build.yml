@@ -1,6 +1,6 @@
 version: 2
 workflows:
   version: 2
-  cf-workflow:
+  build:
     jobs:
       - maven/verify
