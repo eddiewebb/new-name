@@ -38,5 +38,6 @@ steps:
   - store_test_results:
       path: target/failsafe-reports
   # TODO: find maven plugin to list all known artifacts
+  # ./mvnw help:evaluate -Dexpression=project.artifact
   - store_artifacts:
       path: target
