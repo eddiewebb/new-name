@@ -37,7 +37,11 @@ steps:
       path: target/surefire-reports
   - store_test_results:
       path: target/failsafe-reports
-  # TODO: find maven plugin to list all known artifacts
-  # ./mvnw help:evaluate -Dexpression=project.artifact
+  - run:
+      name: Move deployable to storage
+      command: |
+        ARTIFACT=$(mvn -q exec:exec -Dexec.executable='echo' -Dexec.args='${project.build.directory}/${project.build.finalName}.${project.packaging})
+        mkdir artifacts
+        mv $ARTIFACT artifacts/
   - store_artifacts:
-      path: target
+      path: artifacts/
