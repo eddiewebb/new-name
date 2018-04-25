@@ -1,0 +1,42 @@
+description: Runs simple or blue/green deployments to Cloud Foundry.
+parameters:
+  image:
+    #description: "You can override the default image, but be sure to turn off the htmlproofer or have it installed if you do."
+    default: "circleci/openjdk:8-jdk"
+    type: string
+  arguments:
+    #description: "Any additional JVM or Maven arguments to be passed to execution"
+    type: string
+    default: ""
+docker:
+  - image: "<< parameters.image >>"
+steps:
+  - restore_cache:
+      keys:
+        - source-V1-{{ .Branch }}-{{ .Revision }}
+        - source-V1-{{ .Branch }}
+        - source-V1-
+  - checkout
+  - save_cache:
+      key: source-V1-{{ .Branch }}-{{ .Revision }}
+      paths:
+        - .git
+  - restore_cache:
+      keys:
+        - maven-repo-V1-{{ checksum "pom.xml" }}
+        - maven-repo-V1
+  - run: mvn dependency:go-offline
+  - save_cache:
+      paths:
+       - ~/.m2
+      key: maven-repo-V1-{{ checksum "pom.xml" }}
+  - run:
+      name: Maven Verify
+      command: mvn verify -B
+  - store_test_results:
+      path: target/surefire-reports
+  - store_test_results:
+      path: target/failsafe-reports
+  # TODO: find maven plugin to list all known artifacts
+  - store_artifacts:
+      path: target/*.jar
