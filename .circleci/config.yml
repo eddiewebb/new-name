@@ -40,7 +40,7 @@ jobs:
     - run:
         name: Move deployable to storage
         command: |
-          ARTIFACT=$(mvn -q exec:exec -Dexec.executable='echo' -Dexec.args='${project.build.directory}/${project.build.finalName}.${project.packaging})
+          ARTIFACT=$(mvn -q exec:exec -Dexec.executable='echo' -Dexec.args='${project.build.directory}/${project.build.finalName}.${project.packaging}')
           mkdir artifacts
           mv $ARTIFACT artifacts/
     - store_artifacts:
