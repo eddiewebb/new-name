@@ -11,4 +11,4 @@ jobs:
     - image: circleci/openjdk:8-jdk
     steps:
     - run:
-        command: echo "This is the new-name project, but renamed as old-name"
+        command: echo "This is the new-name project, but renamed as old-name, now re-followed"
