@@ -3,10 +3,9 @@ workflows:
   version: 2
   build:
     jobs:
-    - verify: {}
+    - verify
 jobs:
   verify:
-    description: Runs simple or blue/green deployments to Cloud Foundry.
     docker:
     - image: circleci/openjdk:8-jdk
     steps:
